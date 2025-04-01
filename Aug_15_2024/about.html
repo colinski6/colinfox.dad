@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body> 
+<h2>
+About this website:
+</h2>
+<p>
+<tt>
+This website is running on a VM in Google Cloud Platform. I am taking advantage of the 1 year/$300 free credit GCP offers to new users. <br>
+The VM is an E2 micro running Debian.<br>
+The server software is Apache<br>
+<br>
+Interested in making your own website like this one?<br>
+Here's a quick guide:<br>
+Make an account with Google Cloud Platform<br>
+Create a VM instance. I chose E2 Micro and it seems to be working so far. Make sure the boxes to enable HTTP and HTTPS traffic are checked.<br>
+Once your VM is running click the three lines in the top left corner then click VPC Network<br>
+Click on IP Addresses and promote the ephemeral external address of your new VM to a permanent address <br>
+sudo apt update && sudo apt upgrade -make sure your shit is fresh.<br>
+sudo apt install apache2<br>
+You should now be able to type in the VM's IP address and see the default Apache homepage<br>
+Change your DNS A records with your domain provider to point to the IP of your new VM<br>
+Between waiting for DNS Records to resolve and how modern browsers avoid insecure http<br>
+your site probably won't work when you type in the domain but don't worry, we'll figure this out later.<br> 
+sudo nano /etc/hostnames then edit to say example.com<br>
+sudo nano /etc/hosts and add a new line below the first: 127.0.1.1     example.com<br>
+cd /etc/apache2/sites-available<br>
+sudo touch example.com.conf<br>
+sudo cp 000-default.conf example.com.conf<br>
+sudo nano example.com.conf uncomment the line that says servername and then type your domain<br>
+sudo systemctl a2dissite 000-default.conf<br>
+sudo systemctl a2ensite example.com.conf<br>
+sudo systemctl reload apache2<br>
+sudo apt install certbot python3-certbot-apache<br>
+sudo certbot --apache -d example.com then follow the prompts<br>
+You should be able to load your site with your domain name and https!<br>
+It will still be serving you the default apache page but now you can  paste whatever you want into /var/www/html/index.html<br>
+Great Job! Now I made this cool link to take you back <a href=index.html>home</a>
+</tt>
+</p>
+</body>
+</html>
